@@ -2,6 +2,7 @@
 import '@/styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp.astro';
 import { contact } from '@/data/contact.js';
 
 const {
@@ -61,6 +62,7 @@ const schemas = [
       <slot />
     </main>
     <Footer />
+    <FloatingWhatsApp />
     <script>
       import '@/scripts/site.js';
     </script>
