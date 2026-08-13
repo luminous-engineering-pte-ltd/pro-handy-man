@@ -111,6 +111,31 @@ img {
   overflow: hidden;
 }
 
+.mobile-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+  transition: grid-template-rows 220ms ease, opacity 180ms ease;
+}
+
+.mobile-accordion-panel > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mobile-accordion-panel:not([data-open='true']) > div {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+[data-mobile-services-panel][data-open='true'],
+[data-mobile-service-panel][data-open='true'] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .more-panel {
   display: grid;
   grid-template-rows: 0fr;

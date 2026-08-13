@@ -7,9 +7,11 @@ ready(() => {
   const header = document.querySelector('[data-header]');
   const menuButton = document.querySelector('[data-menu-button]');
   const mobileMenu = document.querySelector('[data-mobile-menu]');
-  const megaRoot = document.querySelector('[data-mega-root]');
-  const megaButton = document.querySelector('[data-mega-button]');
+  const megaButtons = document.querySelectorAll('[data-mega-button]');
   const megaMenu = document.querySelector('[data-mega-menu]');
+  const mobileServicesToggle = document.querySelector('[data-mobile-services-toggle]');
+  const mobileServicesPanel = document.querySelector('[data-mobile-services-panel]');
+  const mobileServicesSymbol = document.querySelector('[data-mobile-services-symbol]');
 
   const setMobileMenu = (open) => {
     if (!menuButton || !mobileMenu) return;
@@ -18,18 +20,65 @@ ready(() => {
     document.documentElement.classList.toggle('overflow-hidden', open);
   };
 
-  menuButton?.addEventListener('click', () => setMobileMenu(mobileMenu?.dataset.open !== 'true'));
-  document.querySelectorAll('[data-nav-close]').forEach((link) => link.addEventListener('click', () => setMobileMenu(false)));
-
   const setMega = (open) => {
-    if (!megaButton || !megaMenu) return;
-    megaButton.setAttribute('aria-expanded', String(open));
+    if (!megaMenu) return;
+    megaButtons.forEach((button) => button.setAttribute('aria-expanded', String(open)));
     megaMenu.dataset.open = String(open);
   };
 
-  megaButton?.addEventListener('click', (event) => {
+  const setMobileServices = (open) => {
+    if (!mobileServicesToggle || !mobileServicesPanel) return;
+    mobileServicesToggle.setAttribute('aria-expanded', String(open));
+    mobileServicesPanel.dataset.open = String(open);
+    if (mobileServicesSymbol) mobileServicesSymbol.textContent = open ? '-' : '+';
+
+    if (!open) {
+      mobileServicesPanel.querySelectorAll('[data-mobile-service-toggle]').forEach((button) => button.setAttribute('aria-expanded', 'false'));
+      mobileServicesPanel.querySelectorAll('[data-mobile-service-panel]').forEach((panel) => {
+        panel.dataset.open = 'false';
+      });
+      mobileServicesPanel.querySelectorAll('[data-mobile-service-symbol]').forEach((symbol) => {
+        symbol.textContent = '+';
+      });
+      mobileServicesPanel.querySelectorAll('[data-more-group]').forEach((group) => {
+        group.dataset.expanded = 'false';
+      });
+      mobileServicesPanel.querySelectorAll('[data-more-toggle]').forEach((button) => {
+        const count = button.dataset.moreCount || '';
+        button.setAttribute('aria-expanded', 'false');
+        button.textContent = `+ ${count} More`;
+      });
+    }
+  };
+
+  menuButton?.addEventListener('click', () => {
+    const open = mobileMenu?.dataset.open !== 'true';
+    setMobileMenu(open);
+    if (!open) {
+      setMega(false);
+      setMobileServices(false);
+    }
+  });
+
+  document.querySelectorAll('[data-nav-close]').forEach((link) => link.addEventListener('click', () => {
+    setMobileMenu(false);
+    setMega(false);
+    setMobileServices(false);
+  }));
+
+  megaButtons.forEach((button) => button.addEventListener('click', (event) => {
+    event.preventDefault();
     event.stopPropagation();
-    setMega(megaMenu?.dataset.open !== 'true');
+    const open = megaMenu?.dataset.open !== 'true';
+    if (!button.closest('[data-mobile-menu]')) setMobileMenu(false);
+    setMega(open);
+  }));
+
+  megaMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      setMega(false);
+      setMobileMenu(false);
+    });
   });
 
   megaMenu?.addEventListener('click', (event) => {
@@ -40,7 +89,7 @@ ready(() => {
     if (megaMenu?.dataset.open !== 'true') return;
 
     const target = event.target;
-    const clickedButton = megaButton?.contains(target);
+    const clickedButton = [...megaButtons].some((button) => button.contains(target));
     const clickedMenu = megaMenu?.contains(target);
 
     if (!clickedButton && !clickedMenu) {
@@ -52,6 +101,7 @@ ready(() => {
     if (event.key === 'Escape') {
       setMega(false);
       setMobileMenu(false);
+      setMobileServices(false);
     }
   });
 
@@ -95,6 +145,28 @@ ready(() => {
       if (group) group.dataset.expanded = String(expanded);
       button.setAttribute('aria-expanded', String(expanded));
       button.textContent = expanded ? 'Show Less' : `+ ${count} More`;
+    });
+  });
+
+  mobileServicesToggle?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setMobileServices(mobileServicesPanel?.dataset.open !== 'true');
+  });
+
+  document.querySelectorAll('[data-mobile-service-toggle]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const item = button.closest('[data-mobile-service-item]');
+      const panel = item?.querySelector('[data-mobile-service-panel]');
+      const symbol = item?.querySelector('[data-mobile-service-symbol]');
+      const open = panel?.dataset.open !== 'true';
+
+      button.setAttribute('aria-expanded', String(open));
+      if (panel) panel.dataset.open = String(open);
+      if (symbol) symbol.textContent = open ? '-' : '+';
     });
   });
 
