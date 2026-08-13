@@ -1,0 +1,59 @@
+---
+import { services, subServicePath } from '@/data/services.js';
+import Icon from './Icon.astro';
+const popular = services.filter((service) => service.popular).slice(0, 8);
+---
+
+<footer class="bg-ink text-white">
+  <div class="container-shell py-14">
+    <div class="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
+      <div>
+        <a href="/" class="flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-brass text-ink"><Icon name="Wrench" class="h-5 w-5" /></span>
+          <span class="font-display text-xl font-extrabold">Pro Handyman SG</span>
+        </a>
+        <p class="mt-5 max-w-md text-sm leading-7 text-white/70">Professional handyman services for Singapore homes, offices, shops, and properties. Built for clear quoting, tidy work, and confident service discovery.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/request-quote" class="btn-brass">Request Quote</a>
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">Contact</a>
+        </div>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-3">
+        <div>
+          <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Popular</h2>
+          <ul class="mt-4 space-y-3 text-sm">
+            {popular.map((service) => <li><a class="text-white/72 transition hover:text-white" href={`/services/${service.slug}`}>{service.name}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Company</h2>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a class="text-white/72 transition hover:text-white" href="/about">About</a></li>
+            <li><a class="text-white/72 transition hover:text-white" href="/services">Services</a></li>
+            <li><a class="text-white/72 transition hover:text-white" href="/request-quote">Request Quote</a></li>
+            <li><a class="text-white/72 transition hover:text-white" href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Service Areas</h2>
+          <ul class="mt-4 space-y-3 text-sm text-white/72">
+            <li>Central Singapore</li>
+            <li>East Singapore</li>
+            <li>West Singapore</li>
+            <li>North and North-East</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 border-t border-white/10 pt-6 text-sm text-white/55">
+      <p>© {new Date().getFullYear()} Pro Handyman SG. Service data includes {services.length} main services and {services.reduce((sum, service) => sum + service.subServices.length, 0)} sub-services.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper/95 p-3 shadow-lift backdrop-blur sm:hidden">
+  <div class="grid grid-cols-2 gap-2">
+    <a href="/services" class="rounded-full border border-ink/10 bg-white px-4 py-3 text-center text-sm font-extrabold">Services</a>
+    <a href="/request-quote" class="rounded-full bg-brass px-4 py-3 text-center text-sm font-extrabold text-ink">Get Quote</a>
+  </div>
+</div>

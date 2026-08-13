@@ -1,0 +1,113 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ServiceExplorer from '@/components/ServiceExplorer.astro';
+import FAQ from '@/components/FAQ.astro';
+import CTA from '@/components/CTA.astro';
+import Icon from '@/components/Icon.astro';
+import { services } from '@/data/services.js';
+
+const faq = [
+  { q: 'What services does Pro Handyman SG provide?', a: 'The website covers repair, plumbing, electrical, painting, furniture assembly, renovation, aircon, carpentry, drilling, reinstatement, disposal, flooring, door, ceiling, partition, appliance, and mounting services.' },
+  { q: 'How can I request a quote?', a: 'Use the request quote form and include the service, property type, location, preferred timing, and a short description of the work needed.' },
+  { q: 'Do you handle residential and commercial work?', a: 'The service range is presented for homes, offices, shops, commercial spaces, and property needs across Singapore.' },
+  { q: 'Do you list pricing online?', a: 'Pricing depends on the task scope, site condition, materials, access, and timing. The quote form is designed to collect the details needed for a clear response.' }
+];
+---
+
+<BaseLayout>
+  <section class="relative overflow-hidden bg-linen pt-32 sm:pt-36 lg:pt-40">
+    <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
+    <div class="container-shell relative grid gap-10 pb-16 lg:grid-cols-[1fr_0.92fr] lg:items-center lg:pb-24">
+      <div class="reveal is-visible">
+        <span class="eyebrow">Professional Handyman Services Across Singapore</span>
+        <h1 class="mt-6 max-w-4xl font-display text-5xl font-extrabold leading-[0.96] tracking-tight text-ink sm:text-6xl lg:text-7xl">Repairs, installs, and property fixes handled with care.</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-graphite/80">Pro Handyman SG brings a premium service experience to everyday repairs, installations, maintenance, and property works for Singapore homes and commercial spaces.</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/request-quote" class="btn-brass">Get a Free Quote <Icon name="ArrowRight" class="h-4 w-4" /></a>
+          <a href="/services" class="btn-outline">Explore Services</a>
+        </div>
+        <div class="mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
+          {['Singapore-wide service requests', 'Residential and commercial', 'Clear quote workflow'].map((item) => (
+            <div class="rounded-2xl border border-ink/10 bg-paper/80 p-4 shadow-soft">
+              <Icon name="CheckCircle2" class="h-5 w-5 text-brass" />
+              <p class="mt-2 text-sm font-bold leading-5">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="reveal is-visible relative">
+        <div class="relative overflow-hidden rounded-[2.25rem] shadow-lift">
+          <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1500&q=82" alt="Professional handyman working with tools in a home" class="aspect-[4/5] w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <div class="absolute bottom-5 left-5 right-5 rounded-3xl bg-paper/92 p-5 backdrop-blur">
+            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-brass">Service Range</p>
+            <p class="mt-1 font-display text-2xl font-extrabold">{services.length} main services</p>
+            <p class="text-sm text-graphite/75">{services.reduce((sum, service) => sum + service.subServices.length, 0)} sub-services discoverable across the site</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-paper">
+    <div class="container-shell">
+      <div class="grid gap-4 md:grid-cols-3">
+        {[
+          ['ShieldCheck', 'Professional workflow', 'Structured quote requests and service pages help customers explain the job clearly.'],
+          ['Clock3', 'Fast to understand', 'Search, filters, and dynamic pages make a large service catalogue easy to navigate.'],
+          ['MapPin', 'Singapore focused', 'Designed around HDB, condos, offices, shops, and property needs across Singapore.']
+        ].map(([icon, title, text]) => (
+          <article class="reveal rounded-[1.5rem] border border-ink/10 bg-white p-6 shadow-soft">
+            <Icon name={icon} class="h-7 w-7 text-brass" />
+            <h2 class="mt-5 font-display text-xl font-extrabold">{title}</h2>
+            <p class="mt-3 text-sm leading-7 text-graphite/75">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ServiceExplorer compact={false} title="Every service, easy to find" subtitle="Browse the complete extracted service hierarchy with search, filters, sub-service previews, and dedicated detail pages." />
+
+  <section class="section-padding bg-ink text-white">
+    <div class="container-shell grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div class="reveal">
+        <span class="eyebrow border-white/15 bg-white/10 text-brass">Residential + Commercial</span>
+        <h2 class="mt-5 font-display text-4xl font-extrabold leading-tight sm:text-5xl">Built for the way Singapore properties actually work.</h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {[
+          ['Residential', 'HDB flats, condos, apartments, and landed homes.'],
+          ['Commercial', 'Offices, retail shops, F&B spaces, and commercial properties.'],
+          ['Property Support', 'Reinstatement, hacking, dismantling, and maintenance requests.'],
+          ['Everyday Fixes', 'Doors, taps, lights, shelves, paint, appliances, and more.']
+        ].map(([title, text]) => (
+          <article class="reveal rounded-[1.5rem] border border-white/10 bg-white/8 p-6">
+            <h3 class="font-display text-xl font-extrabold text-brass">{title}</h3>
+            <p class="mt-3 text-sm leading-7 text-white/72">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-shell">
+      <div class="max-w-3xl">
+        <span class="eyebrow">How It Works</span>
+        <h2 class="section-title mt-4">A calm path from problem to booked work.</h2>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-4">
+        {['Tell us what you need', 'Share photos or details', 'Review the quote', 'Schedule the job'].map((step, index) => (
+          <article class="reveal rounded-[1.5rem] border border-ink/10 bg-white p-6 shadow-soft">
+            <span class="font-display text-4xl font-extrabold text-brass">{String(index + 1).padStart(2, '0')}</span>
+            <h3 class="mt-5 font-display text-xl font-extrabold">{step}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={faq} />
+  <CTA />
+</BaseLayout>

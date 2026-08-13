@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+const { title = 'Frequently asked questions', items = [] } = Astro.props;
+---
+
+<section class="section-padding bg-linen/70">
+  <div class="container-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="section-title mt-4">{title}</h2>
+      <p class="mt-4 text-graphite/75">Straight answers for quote requests, scheduling, service scope, and property types.</p>
+    </div>
+    <div class="space-y-3">
+      {items.map((item, index) => (
+        <div data-faq-item data-open={index === 0 ? 'true' : 'false'} class="faq-item reveal rounded-2xl border border-ink/10 bg-white p-5">
+          <button data-faq-button aria-expanded={index === 0 ? 'true' : 'false'} class="flex w-full items-center justify-between gap-4 text-left font-display text-lg font-extrabold">
+            {item.q}
+            <Icon name="ChevronDown" class="h-5 w-5 shrink-0 text-brass" />
+          </button>
+          <div class="faq-panel">
+            <div>
+              <p class="pt-3 text-sm leading-7 text-graphite/75">{item.a}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

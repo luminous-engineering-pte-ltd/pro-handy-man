@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found | Pro Handyman SG" description="Looks like this page needs a handyman. Return home, browse services, or request a quote." canonical="https://prohandymansg.com/404">
+  <section class="grid min-h-screen place-items-center bg-linen px-4 pt-24 text-center">
+    <div class="max-w-2xl">
+      <p class="font-display text-8xl font-extrabold text-brass">404</p>
+      <h1 class="mt-4 font-display text-4xl font-extrabold sm:text-5xl">Looks like this page needs a handyman.</h1>
+      <p class="mt-4 text-graphite/75">The link may have moved, but the service directory and quote request are still ready.</p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn-brass">Home</a>
+        <a href="/services" class="btn-outline">Services</a>
+        <a href="/request-quote" class="btn-primary">Get a Quote</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

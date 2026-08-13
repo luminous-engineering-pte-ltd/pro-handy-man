@@ -1,0 +1,54 @@
+---
+import '@/styles/global.css';
+import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
+
+const {
+  title = 'Pro Handyman SG | Professional Handyman Services Singapore',
+  description = 'Premium handyman services in Singapore for homes, offices, shops, and properties. Explore repair, installation, maintenance, renovation, and reinstatement services.',
+  canonical = 'https://prohandymansg.com/',
+  image = 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1600&q=80',
+  schema = []
+} = Astro.props;
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Pro Handyman SG',
+    url: 'https://prohandymansg.com',
+    areaServed: { '@type': 'Country', name: 'Singapore' },
+    description: 'Professional handyman services for residential, commercial, office, and property needs across Singapore.'
+  },
+  ...schema
+];
+---
+
+<!doctype html>
+<html lang="en-SG">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#102027" />
+    {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '@/scripts/site.js';
+    </script>
+  </body>
+</html>

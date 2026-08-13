@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #102027;
+  --color-graphite: #26353b;
+  --color-linen: #f6f2ea;
+  --color-paper: #fffdf8;
+  --color-brass: #c7902b;
+  --color-clay: #b8573c;
+  --color-mist: #e8edf0;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-display: Manrope, Inter, ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 24px 80px rgba(16, 32, 39, 0.12);
+  --shadow-lift: 0 18px 48px rgba(16, 32, 39, 0.16);
+}
+
+:root {
+  color-scheme: light;
+  background: #fffdf8;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  @apply m-0 bg-paper font-sans text-ink antialiased;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brass;
+}
+
+img {
+  max-width: 100%;
+}
+
+.container-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border border-brass/25 bg-brass/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-brass;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-extrabold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-graphite active:translate-y-0;
+}
+
+.btn-brass {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-brass px-5 py-3 text-sm font-extrabold text-ink transition duration-200 hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-white/70 px-5 py-3 text-sm font-extrabold text-ink transition duration-200 hover:-translate-y-0.5 hover:border-brass hover:bg-white active:translate-y-0;
+}
+
+.section-padding {
+  @apply py-16 sm:py-20 lg:py-24;
+}
+
+.section-title {
+  @apply font-display text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card[hidden] {
+  display: none;
+}
+
+.filter-chip[data-active='true'] {
+  @apply bg-ink text-white;
+}
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+.faq-item[data-open='true'] .faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel > div {
+  overflow: hidden;
+}
+
+.more-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 220ms ease, opacity 180ms ease;
+}
+
+.more-panel > ul,
+.more-panel > div {
+  overflow: hidden;
+}
+
+[data-more-group][data-expanded='true'] .more-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
