@@ -6,41 +6,44 @@ import { contact } from '@/data/contact.js';
 
 <header data-header class="fixed inset-x-0 top-0 z-50 px-3 py-2 transition sm:px-4 sm:py-3">
   <div class="mx-auto w-full max-w-[1216px]">
-    <div class="flex h-14 items-center justify-between gap-3 rounded-full border border-white/10 bg-ink/95 px-3 shadow-lift backdrop-blur-xl transition sm:h-16 sm:px-4 lg:px-5 [.is-scrolled_&]:h-12 sm:[.is-scrolled_&]:h-14 [.is-scrolled_&]:shadow-lift">
+    <div class="flex h-14 items-center justify-between gap-3 rounded-full border border-ink/10 bg-white px-3 shadow-lift backdrop-blur-xl transition sm:h-16 sm:px-4 lg:px-5 [.is-scrolled_&]:h-12 sm:[.is-scrolled_&]:h-14 [.is-scrolled_&]:shadow-lift">
       <a href="/" class="flex min-w-0 items-center gap-2 sm:gap-2.5" aria-label="Pro Handyman SG home">
-        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#0d181d] text-brass sm:h-10 sm:w-10"><Icon name="Wrench" class="h-4 w-4 sm:h-5 sm:w-5" /></span>
-        <span class="hidden truncate font-display text-base font-extrabold tracking-tight text-white min-[420px]:inline lg:text-lg">Pro Handyman SG</span>
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-brass sm:h-10 sm:w-10"><Icon name="Wrench" class="h-4 w-4 sm:h-5 sm:w-5" /></span>
+        <span class="hidden truncate font-display text-base font-extrabold tracking-tight text-ink min-[420px]:inline lg:text-lg">Pro Handyman SG</span>
       </a>
 
-      <nav class="hidden items-center gap-4 text-sm font-extrabold xl:flex xl:gap-6">
-        <a href="/" class="rounded-full px-1.5 py-1 text-white/78 transition hover:bg-white/10 hover:text-white">Home</a>
-        <button data-mega-button aria-expanded="false" class="inline-flex items-center gap-1 rounded-full px-1.5 py-1 text-white/78 transition hover:bg-white/10 hover:text-white">
+      <nav class="hidden items-center gap-3 text-sm font-extrabold xl:flex xl:gap-5">
+        <a href="/" class="rounded-full px-3 py-2 text-graphite transition hover:bg-ink hover:text-white">Home</a>
+        <button data-mega-button aria-expanded="false" class="inline-flex items-center gap-1 rounded-full px-3 py-2 text-graphite transition hover:bg-ink hover:text-white">
           Services <Icon name="ChevronDown" class="h-3.5 w-3.5" />
         </button>
-        <a href="/about" class="rounded-full px-1.5 py-1 text-white/78 transition hover:bg-white/10 hover:text-white">About</a>
-        <a href="/blog" class="rounded-full px-1.5 py-1 text-white/78 transition hover:bg-white/10 hover:text-white">Blog</a>
-        <a href="/contact" class="rounded-full px-1.5 py-1 text-white/78 transition hover:bg-white/10 hover:text-white">Contact</a>
+        <a href="/about" class="rounded-full px-3 py-2 text-graphite transition hover:bg-ink hover:text-white">About</a>
+        <a href="/blog" class="rounded-full px-3 py-2 text-graphite transition hover:bg-ink hover:text-white">Blog</a>
+        <a href="/contact" class="rounded-full px-3 py-2 text-graphite transition hover:bg-ink hover:text-white">Contact</a>
       </nav>
 
       <div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
-        <button data-theme-toggle type="button" class="theme-toggle grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-[#0d181d] text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brass/50 hover:bg-white/10 active:translate-y-0 sm:h-10 sm:w-10" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <a href={contact.phoneHref} class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-graphite active:translate-y-0 sm:h-10 sm:w-10" aria-label={`Call ${contact.phone}`} title={`Call ${contact.phone}`}>
+          <Icon name="Phone" class="h-4 w-4" />
+        </a>
+        <button data-theme-toggle type="button" class="theme-toggle grid h-9 w-9 place-items-center rounded-full border border-ink/10 bg-white text-ink shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brass/50 hover:bg-linen active:translate-y-0 sm:h-10 sm:w-10" aria-label="Switch to dark mode" title="Switch to dark mode">
           <Icon name="Moon" class="theme-toggle__moon h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
           <Icon name="Sun" class="theme-toggle__sun h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
         </button>
         <span class="hidden xl:block">
           <a href="/request-quote" class="inline-flex h-11 items-center justify-center gap-3 rounded-full bg-brass px-5 text-sm font-extrabold text-ink transition duration-200 hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0">Get Quote <Icon name="ArrowRight" class="h-3.5 w-3.5" /></a>
         </span>
-        <button data-menu-button class="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-[#0d181d] text-white sm:h-10 sm:w-10 xl:hidden" aria-label="Open menu" aria-expanded="false">
+        <button data-menu-button class="grid h-9 w-9 place-items-center rounded-full border border-ink/10 bg-white text-ink sm:h-10 sm:w-10 xl:hidden" aria-label="Open menu" aria-expanded="false">
           <Icon name="Menu" class="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
       </div>
     </div>
 
-    <div data-mobile-menu data-open="false" class="mt-2 hidden max-h-[82vh] overflow-auto rounded-2xl border border-white/10 bg-ink/96 p-3 text-white shadow-lift backdrop-blur-xl data-[open=true]:block xl:hidden">
+    <div data-mobile-menu data-open="false" class="mt-2 hidden max-h-[82vh] overflow-auto rounded-2xl border border-ink/10 bg-white p-3 text-ink shadow-lift backdrop-blur-xl data-[open=true]:block xl:hidden">
       <div class="grid gap-1.5">
-        <a data-nav-close href="/" class="rounded-xl bg-white/8 px-3 py-2 text-sm font-extrabold">Home</a>
+        <a data-nav-close href="/" class="rounded-xl bg-linen px-3 py-2 text-sm font-extrabold">Home</a>
         <div>
-          <button type="button" data-mobile-services-toggle aria-expanded="false" class="flex w-full items-center justify-between rounded-xl bg-white/8 px-3 py-2 text-left text-sm font-extrabold">
+          <button type="button" data-mobile-services-toggle aria-expanded="false" class="flex w-full items-center justify-between rounded-xl bg-linen px-3 py-2 text-left text-sm font-extrabold">
             <span>Services</span>
             <span class="text-brass" data-mobile-services-symbol>+</span>
           </button>
@@ -90,9 +93,9 @@ import { contact } from '@/data/contact.js';
             </div>
           </div>
         </div>
-        <a data-nav-close href="/about" class="rounded-xl bg-white/8 px-3 py-2 text-sm font-extrabold">About</a>
-        <a data-nav-close href="/blog" class="rounded-xl bg-white/8 px-3 py-2 text-sm font-extrabold">Blog</a>
-        <a data-nav-close href="/contact" class="rounded-xl bg-white/8 px-3 py-2 text-sm font-extrabold">Contact</a>
+        <a data-nav-close href="/about" class="rounded-xl bg-linen px-3 py-2 text-sm font-extrabold">About</a>
+        <a data-nav-close href="/blog" class="rounded-xl bg-linen px-3 py-2 text-sm font-extrabold">Blog</a>
+        <a data-nav-close href="/contact" class="rounded-xl bg-linen px-3 py-2 text-sm font-extrabold">Contact</a>
         <div class="grid gap-2 pt-2 min-[420px]:grid-cols-3">
           <a data-nav-close href="/request-quote" class="btn-brass">Get Quote</a>
           <a data-nav-close href={contact.phoneHref} class="btn-outline">Call {contact.phone}</a>
