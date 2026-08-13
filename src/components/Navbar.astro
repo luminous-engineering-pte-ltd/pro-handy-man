@@ -23,7 +23,7 @@ import { contact } from '@/data/contact.js';
       </nav>
 
       <div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
-        <a href={contact.phoneHref} class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-graphite active:translate-y-0 sm:h-10 sm:w-10" aria-label={`Call ${contact.phone}`} title={`Call ${contact.phone}`}>
+        <a href={contact.phoneHref} class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 bg-white text-ink shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brass/50 hover:bg-linen active:translate-y-0 sm:h-10 sm:w-10" aria-label={`Call ${contact.phone}`} title={`Call ${contact.phone}`}>
           <Icon name="Phone" class="h-4 w-4" />
         </a>
         <button data-theme-toggle type="button" class="theme-toggle grid h-9 w-9 place-items-center rounded-full border border-ink/10 bg-white text-ink shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brass/50 hover:bg-linen active:translate-y-0 sm:h-10 sm:w-10" aria-label="Switch to dark mode" title="Switch to dark mode">
