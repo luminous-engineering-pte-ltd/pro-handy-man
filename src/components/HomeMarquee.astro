@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+import { marqueeItems } from '@/data/homeSections.js';
+
+const loopItems = [...marqueeItems, ...marqueeItems, ...marqueeItems];
+---
+
+<section aria-label="Service highlights" class="overflow-hidden bg-ink text-white">
+  <div class="home-marquee flex w-max whitespace-nowrap py-3.5">
+    {loopItems.map((item) => (
+      <span class="flex min-w-max items-center gap-4 px-5 text-xs font-extrabold uppercase tracking-[0.16em] text-white/88 sm:px-7">
+        {item}
+        <Icon name="Sparkles" class="h-4 w-4 text-brass" aria-hidden="true" />
+      </span>
+    ))}
+  </div>
+</section>

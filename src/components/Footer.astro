@@ -1,6 +1,7 @@
 ---
 import { services, subServicePath } from '@/data/services.js';
 import Icon from './Icon.astro';
+import { contact } from '@/data/contact.js';
 const popular = services.filter((service) => service.popular).slice(0, 8);
 ---
 
@@ -13,9 +14,20 @@ const popular = services.filter((service) => service.popular).slice(0, 8);
           <span class="font-display text-xl font-extrabold">Pro Handyman SG</span>
         </a>
         <p class="mt-5 max-w-md text-sm leading-7 text-white/70">Professional handyman services for Singapore homes, offices, shops, and properties. Built for clear quoting, tidy work, and confident service discovery.</p>
+        <div class="mt-5 grid gap-3 text-sm">
+          <a href={contact.phoneHref} class="inline-flex items-center gap-3 text-white/78 transition hover:text-white">
+            <Icon name="Phone" class="h-4 w-4 text-brass" /> {contact.phone}
+          </a>
+          <a href={contact.whatsappHref} class="inline-flex items-center gap-3 text-white/78 transition hover:text-white">
+            <Icon name="MessageSquare" class="h-4 w-4 text-brass" /> WhatsApp {contact.phone}
+          </a>
+          <a href={contact.emailHref} class="inline-flex items-center gap-3 text-white/78 transition hover:text-white">
+            <Icon name="Mail" class="h-4 w-4 text-brass" /> {contact.email}
+          </a>
+        </div>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="/request-quote" class="btn-brass">Request Quote</a>
-          <a href="/contact" class="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">Contact</a>
+          <a href={contact.phoneHref} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">Call</a>
         </div>
       </div>
       <div class="grid gap-8 sm:grid-cols-3">
@@ -30,17 +42,18 @@ const popular = services.filter((service) => service.popular).slice(0, 8);
           <ul class="mt-4 space-y-3 text-sm">
             <li><a class="text-white/72 transition hover:text-white" href="/about">About</a></li>
             <li><a class="text-white/72 transition hover:text-white" href="/services">Services</a></li>
+            <li><a class="text-white/72 transition hover:text-white" href="/blog">Blog</a></li>
             <li><a class="text-white/72 transition hover:text-white" href="/request-quote">Request Quote</a></li>
             <li><a class="text-white/72 transition hover:text-white" href="/contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Service Areas</h2>
+          <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Contact</h2>
           <ul class="mt-4 space-y-3 text-sm text-white/72">
-            <li>Central Singapore</li>
-            <li>East Singapore</li>
-            <li>West Singapore</li>
-            <li>North and North-East</li>
+            <li><a class="transition hover:text-white" href={contact.phoneHref}>{contact.phone}</a></li>
+            <li><a class="transition hover:text-white" href={contact.whatsappHref}>WhatsApp for a quote</a></li>
+            <li><a class="transition hover:text-white" href={contact.emailHref}>{contact.email}</a></li>
+            <li>{contact.area}</li>
           </ul>
         </div>
       </div>

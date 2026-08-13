@@ -1,0 +1,119 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CTA from '@/components/CTA.astro';
+import Icon from '@/components/Icon.astro';
+import { posts } from '@/data/posts.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const isPoolGuide = post.slug === 'pool-renovation-singapore';
+const signs = [
+  'Cracked, chipped, or missing pool tiles and mosaic',
+  'Persistent cloudy or green water despite proper chemical dosing',
+  'Water level dropping faster than evaporation can explain',
+  'Rough, faded, or algae-stained plaster and pool deck surfaces',
+  'Rusting handrails, ladders, or corroded pool lighting fixtures',
+  'Outdated pump, filtration, or heating systems running inefficiently'
+];
+const maintenance = [
+  'Weekly checks on chlorine and pH levels',
+  'Monthly filter cleaning or backwashing',
+  'Quarterly inspection of tiles, grout lines, and deck joints',
+  'Annual professional servicing of pumps, heaters, and lighting'
+];
+const related = posts.filter((item) => item.slug !== post.slug).slice(0, 3);
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  image: post.image,
+  datePublished: post.date,
+  author: { '@type': 'Organization', name: 'Pro Handyman SG' },
+  publisher: { '@type': 'Organization', name: 'Pro Handyman SG', url: 'https://prohandymansg.com' },
+  mainEntityOfPage: `https://prohandymansg.com/blog/${post.slug}`
+}];
+---
+
+<BaseLayout title={`${post.title} | Pro Handyman SG`} description={post.excerpt} canonical={`https://prohandymansg.com/blog/${post.slug}`} image={post.image} schema={schema}>
+  <article class="bg-paper pt-32">
+    <div class="container-shell pb-16">
+      <a href="/blog" class="inline-flex items-center gap-2 text-sm font-extrabold text-graphite/75 transition hover:text-ink">
+        <Icon name="ArrowLeft" class="h-4 w-4" /> Back to blog
+      </a>
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-xs font-bold text-graphite/60">
+        <span class="premium-badge rounded-full bg-brass/10 px-3 py-1 text-brass">{post.tag}</span>
+        <span class="inline-flex items-center gap-1"><Icon name="Calendar" class="h-3.5 w-3.5" /> {post.date}</span>
+      </div>
+      <h1 class="mt-5 max-w-5xl font-display text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">{post.title}</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-graphite/80">{post.excerpt}</p>
+      <div class="mt-8 overflow-hidden rounded-[2rem] border border-ink/10 shadow-lift">
+        <img src={post.image} alt={post.title} class="h-[320px] w-full object-cover sm:h-[440px]" />
+      </div>
+    </div>
+  </article>
+
+  <section class="section-padding">
+    <div class="container-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+      <div class="max-w-3xl">
+        {isPoolGuide ? (
+          <div class="space-y-8 text-lg leading-8 text-graphite/80">
+            <p>A well-maintained swimming pool is one of the biggest lifestyle draws of condo living in Singapore, but tropical heat, chlorinated water, and constant foot traffic can wear down tiles, grout, lighting, decking, pumps, and finishes.</p>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">Signs your pool needs renovation, not just maintenance</h2>
+              <p class="mt-4">Regular swimming pool maintenance keeps a healthy pool running, but some issues point to deeper repair or renovation needs.</p>
+              <ul class="mt-5 grid gap-3">
+                {signs.map((item) => <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white p-4 text-base font-bold shadow-soft"><Icon name="CheckCircle2" class="mt-0.5 h-5 w-5 shrink-0 text-brass" /> {item}</li>)}
+              </ul>
+            </section>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">What a professional pool renovation can involve</h2>
+              <p class="mt-4">A comprehensive pool repair scope may include inspection and leak detection, tile and surface replacement, pool deck repair, equipment upgrades, and a water-treatment reset before reopening.</p>
+            </section>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">Why regular swimming pool maintenance still matters</h2>
+              <ul class="mt-5 grid gap-3">
+                {maintenance.map((item) => <li class="flex items-start gap-3 rounded-2xl border border-ink/10 bg-white p-4 text-base font-bold shadow-soft"><Icon name="CheckCircle2" class="mt-0.5 h-5 w-5 shrink-0 text-brass" /> {item}</li>)}
+              </ul>
+            </section>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">Getting an accurate quote</h2>
+              <p class="mt-4">Costs depend on pool size, tile condition, surface damage, leak source, access, and whether pumps, filters, lights, or decking need replacement. A site assessment is the practical way to scope the work properly.</p>
+            </section>
+          </div>
+        ) : (
+          <div class="space-y-8 text-lg leading-8 text-graphite/80">
+            <p>{post.excerpt}</p>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">What to check first</h2>
+              <p class="mt-4">Look for recurring symptoms, moisture, loose fittings, worn hardware, cracking, noise, stains, or signs that the same issue is returning after quick fixes. Early attention usually keeps a small repair from becoming a bigger job.</p>
+            </section>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">When to ask for help</h2>
+              <p class="mt-4">If the work involves plumbing connections, electrical fittings, heavy mounting, ladders, glass, hacking, waterproofing, or built-in fixtures, a professional handyman can help scope the safest method and the right materials.</p>
+            </section>
+            <section>
+              <h2 class="font-display text-3xl font-extrabold leading-tight text-ink">How to prepare for a quote</h2>
+              <p class="mt-4">Share clear photos, measurements, property type, access notes, preferred timing, and a short description of what changed. Those details make the estimate clearer and reduce surprises on site.</p>
+            </section>
+          </div>
+        )}
+      </div>
+      <aside class="premium-card rounded-[1.5rem] border border-ink/10 bg-white p-5 shadow-soft lg:sticky lg:top-28">
+        <h2 class="premium-heading font-display text-xl font-extrabold">Related Guides</h2>
+        <div class="mt-5 grid gap-3">
+          {related.map((item) => (
+            <a href={`/blog/${item.slug}`} class="rounded-2xl border border-ink/10 bg-linen/70 p-4 transition hover:-translate-y-0.5 hover:border-brass">
+              <span class="text-xs font-extrabold uppercase tracking-[0.14em] text-brass">{item.tag}</span>
+              <span class="mt-2 block text-sm font-extrabold leading-6">{item.title}</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CTA title="Need practical help with a repair?" />
+</BaseLayout>

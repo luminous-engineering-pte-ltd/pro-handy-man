@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro';
+import { posts } from '@/data/posts.js';
+
+const featured = posts.slice(0, 3);
+---
+
+<section class="section-padding bg-linen/70">
+  <div class="container-shell">
+    <div class="grid gap-8 lg:grid-cols-[0.72fr_1fr] lg:items-end">
+      <div class="reveal">
+        <span class="eyebrow">Home Care Guides</span>
+        <h2 class="section-title mt-4">Practical repair advice for Singapore homes.</h2>
+        <p class="mt-4 leading-7 text-graphite/75">Useful maintenance and improvement topics from the reference site, redesigned as a compact guide hub for Pro Handyman SG.</p>
+      </div>
+      <div class="reveal lg:justify-self-end">
+        <a href="/blog" class="btn-outline">View Blog <Icon name="ArrowRight" class="h-4 w-4" /></a>
+      </div>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {featured.map((post, index) => (
+        <article class="premium-card group reveal overflow-hidden rounded-[1.5rem] border border-ink/10 bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift" style={`transition-delay:${index * 60}ms`}>
+          <div class="p-4 pb-0">
+            <div class="relative aspect-[16/9] overflow-hidden rounded-[1.1rem] bg-linen">
+              <img src={post.image} alt={post.title} class="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]" loading="lazy" />
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-graphite/60">
+              <span class="premium-badge rounded-full bg-brass/10 px-3 py-1 text-brass">{post.tag}</span>
+              <span>{post.date}</span>
+            </div>
+            <h3 class="premium-heading mt-3 font-display text-lg font-extrabold leading-snug">{post.title}</h3>
+            <p class="premium-muted mt-3 text-sm leading-7">{post.excerpt}</p>
+            <a href={`/blog/${post.slug}`} class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-brass transition group-hover:gap-3">
+              Read guide <Icon name="ArrowRight" class="h-4 w-4" />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

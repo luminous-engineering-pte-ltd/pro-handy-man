@@ -1,3 +1,5 @@
+import { serviceContent, subServiceContent } from './serviceContent.js';
+
 export const services = [
   { slug: 'general-repairs', name: 'General Repairs', icon: 'Wrench', category: 'Repair', popular: true, image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1400&q=80', subServices: [] },
   {
@@ -227,6 +229,15 @@ export const services = [
 
 export const categories = ['All', 'Popular', ...Array.from(new Set(services.map((service) => service.category)))];
 
+services.forEach((service) => {
+  const content = serviceContent[service.slug] || {};
+  Object.assign(service, content);
+  service.subServices = service.subServices.map((subService) => ({
+    ...subService,
+    ...(subServiceContent[`${service.slug}/${subService.slug}`] || {})
+  }));
+});
+
 export const allSubServices = services.flatMap((service) =>
   service.subServices.map((subService) => ({ ...subService, parentSlug: service.slug, parentName: service.name, category: service.category }))
 );
@@ -244,7 +255,7 @@ export const servicePath = (service) => `/services/${service.slug}`;
 export const subServicePath = (service, subService) => `/services/${service.slug}/${subService.slug}`;
 
 export const serviceSummary = (service) =>
-  `${service.name} support for Singapore homes, offices, shops, and property teams, delivered with tidy workmanship and clear communication.`;
+  service.tagline || `${service.name} support for Singapore homes, offices, shops, and property teams, delivered with tidy workmanship and clear communication.`;
 
 export const subServiceSummary = (subService, service) =>
-  `${subService.name} under our ${service.name} service, planned around your space, schedule, and property requirements in Singapore.`;
+  subService.tagline || `${subService.name} under our ${service.name} service, planned around your space, schedule, and property requirements in Singapore.`;

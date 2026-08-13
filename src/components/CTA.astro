@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { contact } from '@/data/contact.js';
 const { title = 'Ready to plan your repair?', text = 'Tell us what needs attention and we will help you shape the next step with a clear quote request.' } = Astro.props;
 ---
 
@@ -14,7 +15,12 @@ const { title = 'Ready to plan your repair?', text = 'Tell us what needs attenti
         </div>
         <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
           <a href="/request-quote" class="btn-brass">Get a Free Quote <Icon name="ArrowRight" class="h-4 w-4" /></a>
-          <a href="/services" class="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">Explore Services</a>
+          <a href={contact.whatsappHref} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">
+            WhatsApp <Icon name="MessageSquare" class="h-4 w-4" />
+          </a>
+          <a href={contact.phoneHref} class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10">
+            Call <Icon name="Phone" class="h-4 w-4" />
+          </a>
         </div>
       </div>
     </div>

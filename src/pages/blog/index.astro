@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import CTA from '@/components/CTA.astro';
+import { posts } from '@/data/posts.js';
+---
+
+<BaseLayout title="Handyman Tips & Home Repair Guides Singapore | Pro Handyman SG" description="Handyman tips, home repair guides, and maintenance advice for Singapore HDB flats, condos, offices, and homes." canonical="https://prohandymansg.com/blog">
+  <section class="bg-linen pt-32">
+    <div class="container-shell pb-16">
+      <span class="eyebrow">Blog</span>
+      <h1 class="mt-5 max-w-4xl font-display text-5xl font-extrabold leading-tight sm:text-6xl">Home care tips and handyman guides.</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-graphite/80">Practical advice on repairs, maintenance, and improvements to help Singapore homeowners keep their spaces in better shape.</p>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-shell grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post, index) => (
+        <article class="premium-card group reveal overflow-hidden rounded-[1.5rem] border border-ink/10 bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift" style={`transition-delay:${index * 55}ms`}>
+          <div class="p-4 pb-0">
+            <div class="relative aspect-[16/9] overflow-hidden rounded-[1.1rem] bg-linen">
+              <img src={post.image} alt={post.title} class="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]" loading="lazy" />
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-graphite/60">
+              <span class="premium-badge rounded-full bg-brass/10 px-3 py-1 text-brass">{post.tag}</span>
+              <span class="inline-flex items-center gap-1"><Icon name="Calendar" class="h-3.5 w-3.5" /> {post.date}</span>
+            </div>
+            <h2 class="premium-heading mt-3 font-display text-lg font-extrabold leading-snug">{post.title}</h2>
+            <p class="premium-muted mt-3 text-sm leading-7">{post.excerpt}</p>
+            <a href={`/blog/${post.slug}`} class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-brass transition group-hover:gap-3">Read more <Icon name="ArrowRight" class="h-4 w-4" /></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CTA title="Need help after reading a guide?" />
+</BaseLayout>

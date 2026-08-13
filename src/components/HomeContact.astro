@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { services } from '@/data/services.js';
+import { contact } from '@/data/contact.js';
+---
+
+<section id="home-contact" class="section-padding bg-ink text-white">
+  <div class="container-shell grid gap-10 lg:grid-cols-[0.88fr_1fr] lg:items-start">
+    <div class="reveal">
+      <span class="eyebrow border-white/15 bg-white/10 text-brass">Get In Touch</span>
+      <h2 class="mt-5 font-display text-4xl font-extrabold leading-tight sm:text-5xl">Tell us what needs fixing and get a clear quote.</h2>
+      <p class="mt-5 max-w-2xl leading-8 text-white/72">Send the service, property type, location, preferred timing, and photos if available. The quote workflow is built to keep details clear before work begins.</p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+        {[
+          ['Call', contact.phone, 'Phone', contact.phoneHref],
+          ['WhatsApp', contact.phone, 'MessageSquare', contact.whatsappHref],
+          ['Email', contact.email, 'Mail', contact.emailHref]
+        ].map(([label, value, icon, href]) => (
+          <a href={href} class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/8 p-4 transition duration-300 hover:-translate-y-0.5 hover:border-brass/45 hover:bg-white/12">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brass text-ink"><Icon name={icon} class="h-5 w-5" /></span>
+            <div>
+              <p class="text-xs font-extrabold uppercase tracking-[0.14em] text-white/45">{label}</p>
+              <p class="mt-1 text-sm font-bold text-white">{value}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/8 p-5 reveal">
+        <div class="flex items-start gap-3">
+          <Icon name="MessageSquare" class="mt-1 h-5 w-5 shrink-0 text-brass" />
+          <p class="text-sm leading-7 text-white/70"><strong class="text-white">Fastest quote details:</strong> include photos, access notes, measurements, and whether the site is an HDB, condo, office, shop, or landed property.</p>
+        </div>
+      </div>
+    </div>
+    <form data-enhanced-form class="reveal rounded-[2rem] border border-white/10 bg-paper p-6 text-ink shadow-lift sm:p-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="grid gap-2 text-sm font-extrabold">Name <input required name="name" class="rounded-2xl border border-ink/10 px-4 py-3 text-sm" placeholder="Your name" /></label>
+        <label class="grid gap-2 text-sm font-extrabold">Phone <input required type="tel" name="phone" class="rounded-2xl border border-ink/10 px-4 py-3 text-sm" placeholder={contact.phone} /></label>
+        <label class="grid gap-2 text-sm font-extrabold">Email <input required type="email" name="email" class="rounded-2xl border border-ink/10 px-4 py-3 text-sm" placeholder={contact.email} /></label>
+        <label class="grid gap-2 text-sm font-extrabold">Service <select required name="service" class="rounded-2xl border border-ink/10 px-4 py-3 text-sm"><option value="">Choose service</option>{services.map((service) => <option>{service.name}</option>)}</select></label>
+        <label class="grid gap-2 text-sm font-extrabold sm:col-span-2">Message <textarea required name="message" rows="5" class="rounded-2xl border border-ink/10 px-4 py-3 text-sm" placeholder="Briefly describe the job, location, and preferred timing"></textarea></label>
+      </div>
+      <button class="btn-brass mt-6 w-full" type="submit">Get a Quote <Icon name="ArrowRight" class="h-4 w-4" /></button>
+      <p data-success hidden class="mt-4 rounded-2xl bg-linen p-4 text-sm font-extrabold text-ink">Thanks. Your quote request has been captured for backend integration.</p>
+    </form>
+  </div>
+</section>

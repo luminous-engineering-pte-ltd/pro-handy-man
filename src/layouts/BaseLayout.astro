@@ -2,6 +2,7 @@
 import '@/styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import { contact } from '@/data/contact.js';
 
 const {
   title = 'Pro Handyman SG | Professional Handyman Services Singapore',
@@ -17,6 +18,8 @@ const schemas = [
     '@type': 'LocalBusiness',
     name: 'Pro Handyman SG',
     url: 'https://prohandymansg.com',
+    telephone: contact.phone,
+    email: contact.email,
     areaServed: { '@type': 'Country', name: 'Singapore' },
     description: 'Professional handyman services for residential, commercial, office, and property needs across Singapore.'
   },
@@ -33,9 +36,8 @@ const schemas = [
       (() => {
         const storageKey = 'pro-handyman-sg-theme';
         const root = document.documentElement;
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const storedTheme = localStorage.getItem(storageKey);
-        const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : (prefersDark ? 'dark' : 'light');
+        const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
 
         root.dataset.theme = theme;
         root.style.colorScheme = theme;

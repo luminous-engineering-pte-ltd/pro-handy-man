@@ -29,12 +29,6 @@ ready(() => {
     applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
   });
 
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    const storedTheme = localStorage.getItem(storageKey);
-    if (storedTheme === 'dark' || storedTheme === 'light') return;
-    applyTheme(event.matches ? 'dark' : 'light');
-  });
-
   const header = document.querySelector('[data-header]');
   const menuButton = document.querySelector('[data-menu-button]');
   const mobileMenu = document.querySelector('[data-mobile-menu]');
