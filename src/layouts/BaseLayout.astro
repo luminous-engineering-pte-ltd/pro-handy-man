@@ -29,6 +29,18 @@ const schemas = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (() => {
+        const storageKey = 'pro-handyman-sg-theme';
+        const root = document.documentElement;
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const storedTheme = localStorage.getItem(storageKey);
+        const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : (prefersDark ? 'dark' : 'light');
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -38,7 +50,7 @@ const schemas = [
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#102027" />
+    <meta name="theme-color" content="#102027" data-theme-color />
     {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
   <body>

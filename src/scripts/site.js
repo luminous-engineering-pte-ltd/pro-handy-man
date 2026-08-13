@@ -4,6 +4,37 @@ const ready = (callback) => {
 };
 
 ready(() => {
+  const storageKey = 'pro-handyman-sg-theme';
+  const root = document.documentElement;
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const themeColor = document.querySelector('[data-theme-color]');
+
+  const applyTheme = (theme, persist = false) => {
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    if (themeColor) themeColor.setAttribute('content', theme === 'dark' ? '#0d1418' : '#102027');
+    if (themeToggle) {
+      const nextTheme = theme === 'dark' ? 'light' : 'dark';
+      const label = `Switch to ${nextTheme} mode`;
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.setAttribute('title', label);
+    }
+    if (persist) localStorage.setItem(storageKey, theme);
+  };
+
+  applyTheme(root.dataset.theme === 'dark' ? 'dark' : 'light');
+  requestAnimationFrame(() => root.classList.add('theme-ready'));
+
+  themeToggle?.addEventListener('click', () => {
+    applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    const storedTheme = localStorage.getItem(storageKey);
+    if (storedTheme === 'dark' || storedTheme === 'light') return;
+    applyTheme(event.matches ? 'dark' : 'light');
+  });
+
   const header = document.querySelector('[data-header]');
   const menuButton = document.querySelector('[data-menu-button]');
   const mobileMenu = document.querySelector('[data-mobile-menu]');

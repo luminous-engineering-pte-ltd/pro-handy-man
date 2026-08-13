@@ -24,6 +24,10 @@ import Icon from './Icon.astro';
         <span class="hidden lg:block">
           <a href="/request-quote" class="btn-brass">Get Quote <Icon name="ArrowRight" class="h-4 w-4" /></a>
         </span>
+        <button data-theme-toggle type="button" class="theme-toggle grid h-11 w-11 place-items-center rounded-full border border-ink/10 bg-white/80 text-ink shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-brass/50 hover:bg-linen active:translate-y-0" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <Icon name="Moon" class="theme-toggle__moon h-5 w-5" aria-hidden="true" />
+          <Icon name="Sun" class="theme-toggle__sun h-5 w-5" aria-hidden="true" />
+        </button>
         <button data-menu-button class="grid h-11 w-11 place-items-center rounded-full border border-ink/10 bg-white lg:hidden" aria-label="Open menu" aria-expanded="false">
           <Icon name="Menu" class="h-5 w-5" />
         </button>
