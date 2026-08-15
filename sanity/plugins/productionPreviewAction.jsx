@@ -16,8 +16,8 @@ const urlForDocument = (doc) => {
   return base
 }
 
-export function productionPreviewAction(context) {
-  const {published, draft} = context
+export function productionPreviewAction(props) {
+  const {published, draft} = props
   const doc = draft || published
 
   return {

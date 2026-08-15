@@ -16,7 +16,7 @@ export default defineConfig({
     structureTool({structure})
   ],
   document: {
-    actions: (prev, context) => [...prev, productionPreviewAction(context)]
+    actions: (prev) => [...prev, productionPreviewAction]
   },
   schema: {
     types: schemaTypes
