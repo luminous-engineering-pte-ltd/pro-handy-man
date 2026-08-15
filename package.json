@@ -12,7 +12,7 @@
     "sanity:deploy": "sanity deploy pro-handy-man-cms",
     "sanity:seed": "node scripts/create-sanity-seed.mjs",
     "sanity:import": "npm run sanity:seed && sanity dataset import sanity-seed.ndjson --dataset production --replace",
-    "sanity:webhook": "node scripts/create-sanity-webhook.mjs"
+    "sanity:webhook": "sanity exec scripts/create-sanity-webhook.mjs --with-user-token"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
