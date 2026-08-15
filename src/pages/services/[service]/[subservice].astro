@@ -3,9 +3,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTA from '@/components/CTA.astro';
 import FAQ from '@/components/FAQ.astro';
 import Icon from '@/components/Icon.astro';
-import { services, subServiceSummary, subServicePath } from '@/data/services.js';
+import { subServiceSummary, subServicePath } from '@/data/services.js';
+import { getServices, resolveSeo } from '@/lib/sanity/content.js';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const services = await getServices();
   return services.flatMap((service) =>
     service.subServices.map((subService) => ({
       params: { service: service.slug, subservice: subService.slug },
@@ -15,6 +17,7 @@ export function getStaticPaths() {
 }
 
 const { service, subService } = Astro.props;
+const services = await getServices();
 const siblings = service.subServices.filter((item) => item.slug !== subService.slug).slice(0, 6);
 const summary = subServiceSummary(subService, service);
 const faq = subService.faqs || [
@@ -27,13 +30,19 @@ const schema = [{
   '@type': 'Service',
   name: `${subService.name} Singapore`,
   serviceType: service.name,
-  provider: { '@type': 'LocalBusiness', name: 'Pro Handyman SG', url: 'https://prohandymansg.com' },
+  provider: { '@type': 'LocalBusiness', name: 'Pro Handyman SG', url: 'https://www.prohandymansg.com' },
   areaServed: { '@type': 'Country', name: 'Singapore' },
   description: summary
 }];
+const seo = resolveSeo(subService.seo, {
+  title: `${subService.name} Singapore | Pro Handyman SG`,
+  description: summary,
+  canonical: `https://www.prohandymansg.com${subServicePath(service, subService)}`,
+  image: service.image
+});
 ---
 
-<BaseLayout title={`${subService.name} Singapore | Pro Handyman SG`} description={summary} canonical={`https://prohandymansg.com${subServicePath(service, subService)}`} image={service.image} schema={schema}>
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex} schema={schema}>
   <section class="bg-linen pt-32">
     <div class="container-shell grid gap-10 pb-16 lg:grid-cols-[1fr_0.82fr] lg:items-center">
       <div class="reveal is-visible">

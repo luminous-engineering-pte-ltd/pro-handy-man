@@ -1,7 +1,8 @@
 ---
 import Icon from './Icon.astro';
-import { posts } from '@/data/posts.js';
+import { posts as localPosts } from '@/data/posts.js';
 
+const { posts = localPosts } = Astro.props;
 const featured = posts.slice(0, 3);
 ---
 

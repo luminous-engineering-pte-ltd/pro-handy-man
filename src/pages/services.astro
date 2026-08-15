@@ -2,23 +2,30 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ServiceExplorer from '@/components/ServiceExplorer.astro';
 import CTA from '@/components/CTA.astro';
-import { services } from '@/data/services.js';
+import { getFixedPage, getServices, resolveSeo } from '@/lib/sanity/content.js';
 
+const services = await getServices();
+const page = await getFixedPage('services');
+const seo = resolveSeo(page?.seo, {
+  title: 'Handyman Services Singapore | Pro Handyman SG',
+  description: 'Explore every Pro Handyman SG service and sub-service, including repairs, plumbing, electrical, painting, furniture assembly, renovation, disposal, flooring, doors, and more.',
+  canonical: 'https://www.prohandymansg.com/services'
+});
 const schema = [{
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  itemListElement: services.map((service, index) => ({ '@type': 'ListItem', position: index + 1, name: service.name, url: `https://prohandymansg.com/services/${service.slug}` }))
+  itemListElement: services.map((service, index) => ({ '@type': 'ListItem', position: index + 1, name: service.name, url: `https://www.prohandymansg.com/services/${service.slug}` }))
 }];
 ---
 
-<BaseLayout title="Handyman Services Singapore | Pro Handyman SG" description="Explore every Pro Handyman SG service and sub-service, including repairs, plumbing, electrical, painting, furniture assembly, renovation, disposal, flooring, doors, and more." canonical="https://prohandymansg.com/services" schema={schema}>
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex} schema={schema}>
   <section class="bg-linen pt-32">
     <div class="container-shell pb-10">
-      <span class="eyebrow">All Services</span>
-      <h1 class="mt-5 max-w-4xl font-display text-5xl font-extrabold leading-tight sm:text-6xl">A complete handyman service directory for Singapore.</h1>
-      <p class="mt-5 max-w-2xl text-lg leading-8 text-graphite/80">Search and filter every extracted service category and sub-service. Each item links to a dedicated page for better planning and quote requests.</p>
+      <span class="eyebrow">{page?.eyebrow || 'All Services'}</span>
+      <h1 class="mt-5 max-w-4xl font-display text-5xl font-extrabold leading-tight sm:text-6xl">{page?.title || 'A complete handyman service directory for Singapore.'}</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-graphite/80">{page?.intro || 'Search and filter every extracted service category and sub-service. Each item links to a dedicated page for better planning and quote requests.'}</p>
     </div>
   </section>
-  <ServiceExplorer compact title="Search the full service range" subtitle="Use filters for popular work types or search directly by fixture, material, room, or task." />
+  <ServiceExplorer services={services} compact title="Search the full service range" subtitle="Use filters for popular work types or search directly by fixture, material, room, or task." />
   <CTA title="Found the service you need?" />
 </BaseLayout>

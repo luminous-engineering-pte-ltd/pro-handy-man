@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/Icon.astro';
-import { services } from '@/data/services.js';
-import { contact } from '@/data/contact.js';
+import { getFixedPage, getServices, getSiteSettings, resolveSeo } from '@/lib/sanity/content.js';
 
+const services = await getServices();
+const { contact } = await getSiteSettings();
+const page = await getFixedPage('contact');
 const serviceOptions = [
   'Floor Polishing',
   'Floor Repair',
@@ -49,9 +51,14 @@ const trustItems = [
   ['Professional consultation', 'Practical advice for polishing, repair, varnishing, and restoration.'],
   ['Floor inspection enquiry', 'Share photos, access notes, and site details for a sharper estimate.']
 ];
+const seo = resolveSeo(page?.seo, {
+  title: 'Contact Pro Handyman SG | Flooring Quote Singapore',
+  description: 'Contact Pro Handyman SG for premium floor polishing, repair, varnishing, surface restoration, and handyman service enquiries across Singapore.',
+  canonical: 'https://www.prohandymansg.com/contact'
+});
 ---
 
-<BaseLayout title="Contact Pro Handyman SG | Flooring Quote Singapore" description="Contact Pro Handyman SG for premium floor polishing, repair, varnishing, surface restoration, and handyman service enquiries across Singapore." canonical="https://prohandymansg.com/contact">
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex}>
   <section class="relative overflow-hidden bg-linen pt-28 sm:pt-32 lg:pt-36">
     <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
     <div class="absolute left-1/2 top-24 h-72 w-[min(900px,90vw)] -translate-x-1/2 rounded-full bg-brass/10 blur-3xl"></div>
@@ -59,9 +66,9 @@ const trustItems = [
     <div class="container-shell relative pb-14 sm:pb-16 lg:pb-18">
       <div class="grid gap-8 lg:grid-cols-[0.95fr_0.82fr] lg:items-center">
         <div class="reveal is-visible min-w-0">
-          <span class="eyebrow">Get In Touch</span>
-          <h1 class="mt-5 max-w-4xl text-balance font-display text-4xl font-extrabold leading-[1.04] tracking-tight text-ink sm:text-5xl lg:text-6xl">Let's Transform Your Floor</h1>
-          <p class="mt-5 max-w-2xl text-base leading-8 text-graphite/80 sm:text-lg">Request a professional flooring quote for polishing, repair, varnishing, surface restoration, or related property works. Share your floor type, photos, access notes, and preferred timing so we can guide the next step clearly.</p>
+          <span class="eyebrow">{page?.eyebrow || 'Get In Touch'}</span>
+          <h1 class="mt-5 max-w-4xl text-balance font-display text-4xl font-extrabold leading-[1.04] tracking-tight text-ink sm:text-5xl lg:text-6xl">{page?.title || "Let's Transform Your Floor"}</h1>
+          <p class="mt-5 max-w-2xl text-base leading-8 text-graphite/80 sm:text-lg">{page?.intro || 'Request a professional flooring quote for polishing, repair, varnishing, surface restoration, or related property works. Share your floor type, photos, access notes, and preferred timing so we can guide the next step clearly.'}</p>
           <div class="mt-7 flex flex-col gap-3 sm:flex-row">
             <a href="#quote-form" class="btn-brass w-full sm:w-auto">Get a Free Quote <Icon name="ArrowRight" class="h-4 w-4" /></a>
             <a href={contact.phoneHref} class="btn-outline w-full sm:w-auto"><Icon name="Phone" class="h-4 w-4" /> {contact.phone}</a>

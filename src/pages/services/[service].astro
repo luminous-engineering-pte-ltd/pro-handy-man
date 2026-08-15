@@ -3,13 +3,16 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTA from '@/components/CTA.astro';
 import FAQ from '@/components/FAQ.astro';
 import Icon from '@/components/Icon.astro';
-import { services, serviceSummary, subServicePath } from '@/data/services.js';
+import { serviceSummary, subServicePath } from '@/data/services.js';
+import { getServices, resolveSeo } from '@/lib/sanity/content.js';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const services = await getServices();
   return services.map((service) => ({ params: { service: service.slug }, props: { service } }));
 }
 
 const { service } = Astro.props;
+const services = await getServices();
 const related = services.filter((item) => item.slug !== service.slug).slice(0, 4);
 const faq = service.faqs || [
   { q: `What does ${service.name} include?`, a: `${service.name} covers the service family shown on this page. Use the sub-service links for more specific tasks where available.` },
@@ -20,13 +23,19 @@ const schema = [{
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: `${service.name} Singapore`,
-  provider: { '@type': 'LocalBusiness', name: 'Pro Handyman SG', url: 'https://prohandymansg.com' },
+  provider: { '@type': 'LocalBusiness', name: 'Pro Handyman SG', url: 'https://www.prohandymansg.com' },
   areaServed: { '@type': 'Country', name: 'Singapore' },
   description: serviceSummary(service)
 }];
+const seo = resolveSeo(service.seo, {
+  title: `${service.name} Singapore | Pro Handyman SG`,
+  description: serviceSummary(service),
+  canonical: `https://www.prohandymansg.com/services/${service.slug}`,
+  image: service.image
+});
 ---
 
-<BaseLayout title={`${service.name} Singapore | Pro Handyman SG`} description={serviceSummary(service)} canonical={`https://prohandymansg.com/services/${service.slug}`} image={service.image} schema={schema}>
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex} schema={schema}>
   <section class="relative overflow-hidden bg-ink pt-32 text-white">
     <img src={service.image} alt={`${service.name} service in Singapore`} class="absolute inset-0 h-full w-full object-cover opacity-35" />
     <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/30"></div>

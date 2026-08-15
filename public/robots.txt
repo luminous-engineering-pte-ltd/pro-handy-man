@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://prohandymansg.com/sitemap-index.xml
+Sitemap: https://www.prohandymansg.com/sitemap-index.xml

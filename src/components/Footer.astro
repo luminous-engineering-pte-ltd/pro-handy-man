@@ -1,8 +1,24 @@
 ---
-import { services, subServicePath } from '@/data/services.js';
+import { subServicePath } from '@/data/services.js';
 import Icon from './Icon.astro';
-import { contact } from '@/data/contact.js';
+import { getServices, getSiteSettings } from '@/lib/sanity/content.js';
+
+const services = await getServices();
+const settings = await getSiteSettings();
+const { contact } = settings;
 const popular = services.filter((service) => service.popular).slice(0, 8);
+const companyLinks = settings.footerCompanyLinks?.length
+  ? settings.footerCompanyLinks
+  : [
+      { label: 'About', href: '/about' },
+      { label: 'Services', href: '/services' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Request Quote', href: '/request-quote' },
+      { label: 'Contact', href: '/contact' }
+    ];
+const footerDescription =
+  settings.footerDescription ||
+  'Professional handyman services for Singapore homes, offices, shops, and properties. Built for clear quoting, tidy work, and confident service discovery.';
 ---
 
 <footer class="bg-ink text-white">
@@ -13,7 +29,7 @@ const popular = services.filter((service) => service.popular).slice(0, 8);
           <span class="grid h-11 w-11 place-items-center rounded-full bg-brass text-ink"><Icon name="Wrench" class="h-5 w-5" /></span>
           <span class="font-display text-xl font-extrabold">Pro Handyman SG</span>
         </a>
-        <p class="mt-5 max-w-md text-sm leading-7 text-white/70">Professional handyman services for Singapore homes, offices, shops, and properties. Built for clear quoting, tidy work, and confident service discovery.</p>
+        <p class="mt-5 max-w-md text-sm leading-7 text-white/70">{footerDescription}</p>
         <div class="mt-5 grid gap-3 text-sm">
           <a href={contact.phoneHref} class="inline-flex items-center gap-3 text-white/78 transition hover:text-white">
             <Icon name="Phone" class="h-4 w-4 text-brass" /> {contact.phone}
@@ -40,11 +56,7 @@ const popular = services.filter((service) => service.popular).slice(0, 8);
         <div>
           <h2 class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-brass">Company</h2>
           <ul class="mt-4 space-y-3 text-sm">
-            <li><a class="text-white/72 transition hover:text-white" href="/about">About</a></li>
-            <li><a class="text-white/72 transition hover:text-white" href="/services">Services</a></li>
-            <li><a class="text-white/72 transition hover:text-white" href="/blog">Blog</a></li>
-            <li><a class="text-white/72 transition hover:text-white" href="/request-quote">Request Quote</a></li>
-            <li><a class="text-white/72 transition hover:text-white" href="/contact">Contact</a></li>
+            {companyLinks.map((item) => <li><a class="text-white/72 transition hover:text-white" href={item.href}>{item.label}</a></li>)}
           </ul>
         </div>
         <div>

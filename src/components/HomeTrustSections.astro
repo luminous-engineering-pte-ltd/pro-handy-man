@@ -4,10 +4,15 @@ import {
   allDistricts,
   certifications,
   locationDetails,
-  recentProjects,
   recognitions,
-  testimonials
+  recentProjects as localRecentProjects,
+  testimonials as localTestimonials
 } from '@/data/homeSections.js';
+
+const {
+  testimonials = localTestimonials,
+  projects = localRecentProjects
+} = Astro.props;
 ---
 
 <section id="customer-reviews" class="section-padding bg-linen/70">
@@ -108,7 +113,7 @@ import {
       <p class="mt-4 leading-7 text-graphite/75">A sample of recent handyman, renovation, maintenance, and installation jobs completed for Singapore homes.</p>
     </div>
     <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {recentProjects.map((project, index) => (
+      {projects.map((project, index) => (
         <article class="premium-card group reveal overflow-hidden rounded-[1.5rem] border border-ink/10 bg-white shadow-soft transition duration-300 hover:shadow-lift" style={`transition-delay:${index * 55}ms`}>
           <div class="p-4 pb-0">
             <div class="relative aspect-[16/7] overflow-hidden rounded-[1.1rem] bg-linen">

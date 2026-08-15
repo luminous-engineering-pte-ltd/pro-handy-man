@@ -1,5 +1,7 @@
 ---
-import { contact } from '@/data/contact.js';
+import { getSiteSettings } from '@/lib/sanity/content.js';
+
+const { contact } = await getSiteSettings();
 ---
 
 <a

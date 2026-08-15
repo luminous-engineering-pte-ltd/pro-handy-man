@@ -1,7 +1,13 @@
 ---
 import Icon from './Icon.astro';
-import { contact } from '@/data/contact.js';
-const { title = 'Ready to plan your repair?', text = 'Tell us what needs attention and we will help you shape the next step with a clear quote request.' } = Astro.props;
+import { getSiteSettings } from '@/lib/sanity/content.js';
+
+const settings = await getSiteSettings();
+const { contact } = settings;
+const {
+  title = settings.globalCtaTitle || 'Ready to plan your repair?',
+  text = settings.globalCtaText || 'Tell us what needs attention and we will help you shape the next step with a clear quote request.'
+} = Astro.props;
 ---
 
 <section class="section-padding">

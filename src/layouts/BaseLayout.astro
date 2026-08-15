@@ -3,22 +3,24 @@ import '@/styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp.astro';
-import { contact } from '@/data/contact.js';
+import { getSiteSettings } from '@/lib/sanity/content.js';
 
 const {
   title = 'Pro Handyman SG | Professional Handyman Services Singapore',
   description = 'Premium handyman services in Singapore for homes, offices, shops, and properties. Explore repair, installation, maintenance, renovation, and reinstatement services.',
-  canonical = 'https://prohandymansg.com/',
+  canonical = 'https://www.prohandymansg.com/',
   image = 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1600&q=80',
+  noIndex = false,
   schema = []
 } = Astro.props;
 
+const { contact } = await getSiteSettings();
 const schemas = [
   {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Pro Handyman SG',
-    url: 'https://prohandymansg.com',
+    url: 'https://www.prohandymansg.com',
     telephone: contact.phone,
     email: contact.email,
     areaServed: { '@type': 'Country', name: 'Singapore' },
@@ -46,6 +48,7 @@ const schemas = [
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -54,6 +57,7 @@ const schemas = [
     <meta property="og:image" content={image} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#102027" data-theme-color />
+    <slot name="head" />
     {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
   <body>

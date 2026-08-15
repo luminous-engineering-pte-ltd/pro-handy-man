@@ -1,7 +1,16 @@
 ---
-import { categories, services, servicePath, subServicePath, serviceSummary } from '@/data/services.js';
+import { servicePath, serviceSummary } from '@/data/services.js';
+import { getServices } from '@/lib/sanity/content.js';
 import Icon from './Icon.astro';
-const { compact = false, title = 'Find the right handyman service', subtitle = 'Search every main service and sub-service from the Pro Handyman SG service range.' } = Astro.props;
+const {
+  compact = false,
+  title = 'Find the right handyman service',
+  subtitle = 'Search every main service and sub-service from the Pro Handyman SG service range.',
+  services: providedServices
+} = Astro.props;
+
+const services = providedServices || await getServices();
+const categories = ['All', 'Popular', ...Array.from(new Set(services.map((service) => service.category).filter(Boolean)))];
 ---
 
 <section class={compact ? 'py-8' : 'section-padding'} data-service-search>

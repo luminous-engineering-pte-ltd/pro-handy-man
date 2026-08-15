@@ -1,7 +1,9 @@
 ---
 import Icon from './Icon.astro';
-import { services } from '@/data/services.js';
-import { contact } from '@/data/contact.js';
+import { getServices, getSiteSettings } from '@/lib/sanity/content.js';
+
+const services = await getServices();
+const { contact } = await getSiteSettings();
 ---
 
 <section id="home-contact" class="section-padding bg-ink text-white">

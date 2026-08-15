@@ -6,13 +6,24 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "preview": "astro preview --host 127.0.0.1",
+    "sanity:dev": "sanity dev",
+    "sanity:build": "sanity build",
+    "sanity:deploy": "sanity deploy pro-handy-man-cms",
+    "sanity:seed": "node scripts/create-sanity-seed.mjs",
+    "sanity:import": "npm run sanity:seed && sanity dataset import sanity-seed.ndjson --dataset production --replace",
+    "sanity:webhook": "node scripts/create-sanity-webhook.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.3",
     "@lucide/astro": "^1.31.0",
+    "@portabletext/to-html": "^5.0.3",
+    "@sanity/client": "^7.26.2",
+    "@sanity/image-url": "^2.1.1",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.1",
+    "sanity": "^5.31.1",
+    "styled-components": "^6.5.3",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {

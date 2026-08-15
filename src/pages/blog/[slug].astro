@@ -2,13 +2,17 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTA from '@/components/CTA.astro';
 import Icon from '@/components/Icon.astro';
-import { posts } from '@/data/posts.js';
+import { getPosts, resolveSeo } from '@/lib/sanity/content.js';
+import { portableTextToHtml } from '@/lib/sanity/portableText.js';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const posts = await getPosts();
   return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
+const posts = await getPosts();
+const cmsBody = portableTextToHtml(post.body);
 const isPoolGuide = post.slug === 'pool-renovation-singapore';
 const signs = [
   'Cracked, chipped, or missing pool tiles and mosaic',
@@ -32,12 +36,18 @@ const schema = [{
   image: post.image,
   datePublished: post.date,
   author: { '@type': 'Organization', name: 'Pro Handyman SG' },
-  publisher: { '@type': 'Organization', name: 'Pro Handyman SG', url: 'https://prohandymansg.com' },
-  mainEntityOfPage: `https://prohandymansg.com/blog/${post.slug}`
+  publisher: { '@type': 'Organization', name: 'Pro Handyman SG', url: 'https://www.prohandymansg.com' },
+  mainEntityOfPage: `https://www.prohandymansg.com/blog/${post.slug}`
 }];
+const seo = resolveSeo(post.seo, {
+  title: `${post.title} | Pro Handyman SG`,
+  description: post.excerpt,
+  canonical: `https://www.prohandymansg.com/blog/${post.slug}`,
+  image: post.image
+});
 ---
 
-<BaseLayout title={`${post.title} | Pro Handyman SG`} description={post.excerpt} canonical={`https://prohandymansg.com/blog/${post.slug}`} image={post.image} schema={schema}>
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex} schema={schema}>
   <article class="bg-paper pt-32">
     <div class="container-shell pb-16">
       <a href="/blog" class="inline-flex items-center gap-2 text-sm font-extrabold text-graphite/75 transition hover:text-ink">
@@ -58,7 +68,9 @@ const schema = [{
   <section class="section-padding">
     <div class="container-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
       <div class="max-w-3xl">
-        {isPoolGuide ? (
+        {cmsBody ? (
+          <div class="space-y-8 text-lg leading-8 text-graphite/80" set:html={cmsBody} />
+        ) : isPoolGuide ? (
           <div class="space-y-8 text-lg leading-8 text-graphite/80">
             <p>A well-maintained swimming pool is one of the biggest lifestyle draws of condo living in Singapore, but tropical heat, chlorinated water, and constant foot traffic can wear down tiles, grout, lighting, decking, pumps, and finishes.</p>
             <section>

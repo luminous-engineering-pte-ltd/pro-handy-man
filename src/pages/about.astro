@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/Icon.astro';
-import { services, servicePath, serviceSummary } from '@/data/services.js';
-import { contact } from '@/data/contact.js';
+import { servicePath, serviceSummary } from '@/data/services.js';
+import { getFixedPage, getServices, getSiteSettings, resolveSeo } from '@/lib/sanity/content.js';
 
+const services = await getServices();
+const { contact } = await getSiteSettings();
+const page = await getFixedPage('about');
 const flooringService = services.find((service) => service.slug === 'flooring');
 const totalSubServices = services.reduce((count, service) => count + service.subServices.length, 0);
 
@@ -48,17 +51,22 @@ const stats = [
   ['Islandwide', 'Singapore coverage'],
   ['Homes + Commercial', 'Property types supported']
 ];
+const seo = resolveSeo(page?.seo, {
+  title: 'About Pro Handyman SG | Premium Flooring & Handyman Services Singapore',
+  description: 'Learn about Pro Handyman SG, a Singapore flooring and handyman service brand focused on floor polishing, repair, varnishing, restoration, and professional property works.',
+  canonical: 'https://www.prohandymansg.com/about'
+});
 ---
 
-<BaseLayout title="About Pro Handyman SG | Premium Flooring & Handyman Services Singapore" description="Learn about Pro Handyman SG, a Singapore flooring and handyman service brand focused on floor polishing, repair, varnishing, restoration, and professional property works." canonical="https://prohandymansg.com/about">
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex}>
   <section class="relative overflow-hidden bg-linen pt-28 sm:pt-32 lg:pt-36">
     <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-brass/10 to-transparent"></div>
     <div class="container-shell relative grid gap-10 pb-16 lg:grid-cols-[1fr_0.92fr] lg:items-center">
       <div class="reveal is-visible min-w-0">
-        <span class="eyebrow">About Us</span>
-        <h1 class="mt-5 font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">Premium flooring care, repairs, and property works for Singapore spaces.</h1>
+        <span class="eyebrow">{page?.eyebrow || 'About Us'}</span>
+        <h1 class="mt-5 font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">{page?.title || 'Premium flooring care, repairs, and property works for Singapore spaces.'}</h1>
         <p class="mt-5 max-w-2xl text-base leading-8 text-graphite/80 sm:text-lg">
-          Pro Handyman SG helps homeowners, tenants, offices, shops, and property teams plan flooring, repair, installation, restoration, and maintenance work with clarity. The aim is simple: make every enquiry feel professional, transparent, and easy to move from problem to polished result.
+          {page?.intro || 'Pro Handyman SG helps homeowners, tenants, offices, shops, and property teams plan flooring, repair, installation, restoration, and maintenance work with clarity. The aim is simple: make every enquiry feel professional, transparent, and easy to move from problem to polished result.'}
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href="/request-quote" class="btn-brass w-full sm:w-auto">Get a Free Quote <Icon name="ArrowRight" class="h-4 w-4" /></a>

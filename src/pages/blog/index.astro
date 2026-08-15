@@ -2,15 +2,23 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/Icon.astro';
 import CTA from '@/components/CTA.astro';
-import { posts } from '@/data/posts.js';
+import { getFixedPage, getPosts, resolveSeo } from '@/lib/sanity/content.js';
+
+const posts = await getPosts();
+const page = await getFixedPage('blog');
+const seo = resolveSeo(page?.seo, {
+  title: 'Handyman Tips & Home Repair Guides Singapore | Pro Handyman SG',
+  description: 'Handyman tips, home repair guides, and maintenance advice for Singapore HDB flats, condos, offices, and homes.',
+  canonical: 'https://www.prohandymansg.com/blog'
+});
 ---
 
-<BaseLayout title="Handyman Tips & Home Repair Guides Singapore | Pro Handyman SG" description="Handyman tips, home repair guides, and maintenance advice for Singapore HDB flats, condos, offices, and homes." canonical="https://prohandymansg.com/blog">
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex}>
   <section class="bg-linen pt-32">
     <div class="container-shell pb-16">
-      <span class="eyebrow">Blog</span>
-      <h1 class="mt-5 max-w-4xl font-display text-5xl font-extrabold leading-tight sm:text-6xl">Home care tips and handyman guides.</h1>
-      <p class="mt-5 max-w-2xl text-lg leading-8 text-graphite/80">Practical advice on repairs, maintenance, and improvements to help Singapore homeowners keep their spaces in better shape.</p>
+      <span class="eyebrow">{page?.eyebrow || 'Blog'}</span>
+      <h1 class="mt-5 max-w-4xl font-display text-5xl font-extrabold leading-tight sm:text-6xl">{page?.title || 'Home care tips and handyman guides.'}</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-graphite/80">{page?.intro || 'Practical advice on repairs, maintenance, and improvements to help Singapore homeowners keep their spaces in better shape.'}</p>
     </div>
   </section>
 

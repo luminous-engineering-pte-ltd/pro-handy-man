@@ -1,6 +1,7 @@
 export const posts = [
   {
     slug: 'pool-renovation-singapore',
+    previousSlugs: ['pool-renovation-guide-singapore'],
     title: 'Pool Renovation Singapore: The Complete Guide to Restoring Your Condo Swimming Pool',
     date: '27 Jul 2026',
     tag: 'Pool Renovation',

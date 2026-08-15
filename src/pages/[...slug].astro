@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getRedirects } from '@/lib/sanity/content.js';
+
+export async function getStaticPaths() {
+  const redirects = await getRedirects();
+  return redirects.map((redirect) => ({
+    params: { slug: redirect.from.replace(/^\/+|\/+$/g, '') },
+    props: { redirect }
+  }));
+}
+
+const { redirect } = Astro.props;
+const target = redirect.to.startsWith('http') ? redirect.to : redirect.to.startsWith('/') ? redirect.to : `/${redirect.to}`;
+---
+
+<BaseLayout title="Redirecting | Pro Handyman SG" description="This page has moved." canonical={`https://www.prohandymansg.com${target}`} noIndex={true}>
+  <meta slot="head" http-equiv="refresh" content={`0; url=${target}`} />
+  <section class="bg-linen pt-32">
+    <div class="container-shell pb-16">
+      <span class="eyebrow">Redirecting</span>
+      <h1 class="mt-5 font-display text-5xl font-extrabold leading-tight">This page has moved.</h1>
+      <p class="mt-5 text-lg leading-8 text-graphite/80">You are being sent to the current page.</p>
+      <a href={target} class="btn-brass mt-8">Open current page</a>
+      <script is:inline define:vars={{ target }}>
+        window.location.replace(target);
+      </script>
+    </div>
+  </section>
+</BaseLayout>

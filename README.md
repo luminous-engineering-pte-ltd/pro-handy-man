@@ -37,7 +37,7 @@ npm run preview
 
 ## Deployment
 
-The production site URL is configured in `astro.config.mjs` as `https://prohandymansg.com`. Deploy the generated `dist` directory to any static hosting provider.
+The production site URL is configured in `astro.config.mjs` as `https://www.prohandymansg.com`. Deploy the generated `dist` directory to any static hosting provider.
 
 ## Project Structure
 

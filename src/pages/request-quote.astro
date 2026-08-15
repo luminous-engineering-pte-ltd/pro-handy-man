@@ -1,18 +1,25 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/Icon.astro';
-import { services } from '@/data/services.js';
-import { contact } from '@/data/contact.js';
+import { getFixedPage, getServices, getSiteSettings, resolveSeo } from '@/lib/sanity/content.js';
+const services = await getServices();
+const { contact } = await getSiteSettings();
+const page = await getFixedPage('request-quote');
 const subOptions = services.flatMap((service) => service.subServices.map((sub) => `${service.name} - ${sub.name}`));
+const seo = resolveSeo(page?.seo, {
+  title: 'Request a Handyman Quote Singapore | Pro Handyman SG',
+  description: 'Request a handyman services quote from Pro Handyman SG. Choose a service, sub-service, property type, Singapore location, preferred date, and project details.',
+  canonical: 'https://www.prohandymansg.com/request-quote'
+});
 ---
 
-<BaseLayout title="Request a Handyman Quote Singapore | Pro Handyman SG" description="Request a handyman services quote from Pro Handyman SG. Choose a service, sub-service, property type, Singapore location, preferred date, and project details." canonical="https://prohandymansg.com/request-quote">
+<BaseLayout title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} noIndex={seo.noIndex}>
   <section class="bg-linen pt-32">
     <div class="container-shell grid gap-10 pb-16 lg:grid-cols-[0.72fr_1fr]">
       <div>
-        <span class="eyebrow">Free Quote Request</span>
-        <h1 class="mt-5 font-display text-5xl font-extrabold leading-tight sm:text-6xl">A better brief makes a better quote.</h1>
-        <p class="mt-5 text-lg leading-8 text-graphite/80">Share the service, location, timing, property type, and project notes. Upload support is represented in the UI and ready to connect to a backend.</p>
+        <span class="eyebrow">{page?.eyebrow || 'Free Quote Request'}</span>
+        <h1 class="mt-5 font-display text-5xl font-extrabold leading-tight sm:text-6xl">{page?.title || 'A better brief makes a better quote.'}</h1>
+        <p class="mt-5 text-lg leading-8 text-graphite/80">{page?.intro || 'Share the service, location, timing, property type, and project notes. Upload support is represented in the UI and ready to connect to a backend.'}</p>
         <div class="mt-8 grid gap-3">
           <a href={contact.phoneHref} class="flex items-center gap-3 rounded-2xl bg-white p-4 font-bold shadow-soft transition hover:-translate-y-0.5 hover:bg-linen">
             <Icon name="Phone" class="h-5 w-5 text-brass" /> Call {contact.phone}
